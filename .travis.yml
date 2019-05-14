@@ -26,5 +26,5 @@ before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
-  - cmake -DCMAKE_BUILD_TYPE=Debug epi_judge_cpp
-  - cmake --build epi_judge_cpp --config Debug --target epi_judge_cpp
+  - cmake -DCMAKE_BUILD_TYPE=Debug
+  - cmake --build epi_judge_cpp --config Debug
