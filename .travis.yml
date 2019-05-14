@@ -27,4 +27,4 @@ before_install:
 
 script:
   - cmake -DCMAKE_BUILD_TYPE=Debug epi_judge_cpp
-  - cmake --build epi_judge_cpp --config Debug --target tests
+  - cmake --build epi_judge_cpp --config Debug --target epi_judge_cpp

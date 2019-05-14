@@ -3,8 +3,25 @@
 using std::vector;
 
 bool HasTwoSum(const vector<int>& A, int t) {
-  // TODO - you fill in here.
-  return true;
+  assert(std::is_sorted(std::cbegin(A), std::cend(A)));
+
+  if (A.empty()) {
+    return false;
+  }
+
+  auto fwd_iter = std::cbegin(A);
+  auto bwd_iter = std::prev(std::cend(A));
+  while (std::distance(fwd_iter, bwd_iter) >= 0) {
+    auto current = *fwd_iter + *bwd_iter;
+    if (current > t) {
+      std::advance(bwd_iter, -1);
+    } else if (current < t) {
+      std::advance(fwd_iter, 1);
+    } else {
+      return true;
+    }
+  }
+  return false;
 }
 
 int main(int argc, char* argv[]) {
