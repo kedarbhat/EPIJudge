@@ -1,0 +1,30 @@
+# borrowed from https://github.com/bsamseth/cpp-project/blob/master/.travis.yml
+
+sudo: false
+language: cpp
+dist: xenial
+notifications:
+  email: false
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          update: true
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-8
+            - libgtest-dev
+            - cmake
+            - cmake-data
+      env:
+        - MATRIX_EVAL="CXX_COMPILER=g++-8 && CXX=g++-8 && CC=gcc-8 && CXXSTD=c++14"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+
+script:
+  - cmake -DCMAKE_BUILD_TYPE=Debug epi_judge_cpp
+  - cmake --build epi_judge_cpp --config Debug --target tests
