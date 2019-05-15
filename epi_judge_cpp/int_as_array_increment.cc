@@ -6,17 +6,18 @@ vector<int> PlusOne(vector<int> A) {
     return std::vector<int>{1};
   }
 
-  int carry = 0;
-  for (auto iter = std::rbegin(A); iter != std::rend(A); iter = carry == 1 ? std::next(iter, 1) : std::rend(A)) {
-    if (*iter == 9) {
+  bool carry = false;
+  for (auto iter = std::rbegin(A); iter != std::rend(A);) {
+    carry = *iter == 9;
+    if (carry) {
       *iter = 0;
-      carry = 1;
+      std::advance(iter, 1);
     } else {
       ++(*iter);
-      carry = 0;
+      iter = std::rend(A);
     }
   }
-  if (carry == 1) {
+  if (carry) {
     A.insert(std::begin(A), 1);
   }
   return A;
