@@ -1,10 +1,22 @@
 #include <vector>
+#include <climits>
 #include "test_framework/generic_test.h"
-using std::vector;
 
-int FindElementAppearsOnce(const vector<int>& A) {
-  // TODO - you fill in here.
-  return 0;
+int FindElementAppearsOnce(const std::vector<int>& A) {
+  std::array<int, sizeof(int)*CHAR_BIT> elementCounts{};
+  for (auto x : A) {
+    for (auto & elementCount : elementCounts) {
+      elementCount += x & 1;
+      x >>= 1;
+    }
+  }
+
+  auto result = 0;
+  for (int i = 0; i < elementCounts.size(); ++i) {
+    result |= elementCounts[i] % 3 << i;
+  }
+
+  return result;
 }
 
 int main(int argc, char* argv[]) {
