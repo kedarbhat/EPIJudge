@@ -2,7 +2,12 @@
 #include "test_framework/generic_test.h"
 using std::vector;
 double BuyAndSellStockOnce(const vector<double>& prices) {
-  // TODO - you fill in here.
+  auto minPriceSoFar = std::numeric_limits<double>::lowest();
+  auto maxProfit = 0.0;
+  for (auto px : prices) {
+    maxProfit = std::max(maxProfit, px - minPriceSoFar /* profit if stock is sold today */);
+    minPriceSoFar = std::min(minPriceSoFar, px);
+  }
   return 0.0;
 }
 
