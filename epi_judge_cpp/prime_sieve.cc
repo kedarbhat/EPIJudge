@@ -3,8 +3,28 @@
 using std::vector;
 // Given n, return all primes up to and including n.
 vector<int> GeneratePrimes(int n) {
-  // TODO - you fill in here.
-  return {};
+  if (n < 2) {
+    return std::vector<int>{};
+  }
+
+  std::vector<bool> isPrime(n+1, true);
+  isPrime[0] = false;
+  isPrime[1] = false;
+  for (auto i = 2; i*i <= n; ++i) {
+    if (isPrime[i]) {
+      for (auto j = i*i; j <= n; j += i) {
+        isPrime[j] = false;
+      }
+    }
+  }
+
+  std::vector<int> primes;
+  for (auto i = 2; i <= n; ++i) {
+    if (isPrime[i]) {
+      primes.emplace_back(i);
+    }
+  }
+  return primes;
 }
 
 int main(int argc, char* argv[]) {
