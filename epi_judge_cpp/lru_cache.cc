@@ -1,24 +1,65 @@
+#include <list>
 #include <vector>
 #include "test_framework/generic_test.h"
 #include "test_framework/serialization_traits.h"
 #include "test_framework/test_failure.h"
 
+struct BookType {
+  int isbn;
+  int price;
+  bool operator==(const BookType& rhs) const {
+    if (std::addressof(rhs) == this) {
+      return true;
+    }
+    return rhs.isbn == isbn && rhs.price == price;
+  }
+};
+
 class LruCache {
+private:
+  std::list<BookType> isbnList_;
+  std::size_t capacity_;
+
  public:
-  LruCache(size_t capacity) {}
+  explicit LruCache(size_t capacity) : capacity_(capacity) {}
   int Lookup(int isbn) {
-    // TODO - you fill in here.
-    return 0;
+    auto iter = std::find_if(std::cbegin(isbnList_), std::cend(isbnList_), [isbn](auto&& book) { return book.isbn == isbn; });
+    if (iter == std::cend(isbnList_)) {
+      return -1;
+    } else {
+      const auto& book = *iter;
+      isbnList_.erase(iter);
+      isbnList_.push_front(book);
+      return book.price;
+    }
   }
+
   void Insert(int isbn, int price) {
-    // TODO - you fill in here.
-    return;
+    const BookType& bookArg{isbn, price};
+    auto iter = std::find_if(std::cbegin(isbnList_), std::cend(isbnList_), [isbn](auto&& book) { return book.isbn == isbn; });
+    if (iter != std::cend(isbnList_)) {
+      const auto &storedBook = *iter;
+      isbnList_.erase(iter);
+      isbnList_.push_front(storedBook);
+    } else {
+      if (isbnList_.size() == capacity_) {
+        isbnList_.pop_back();
+      }
+      isbnList_.push_front(bookArg);
+    }
+    assert(isbnList_.size() <= capacity_);
   }
+
   bool Erase(int isbn) {
-    // TODO - you fill in here.
+    auto iter = std::find_if(std::cbegin(isbnList_), std::cend(isbnList_), [isbn](auto&& book) { return book.isbn == isbn; });
+    if (iter == std::cend(isbnList_)) {
+      return false;
+    }
+    isbnList_.erase(iter);
     return true;
   }
 };
+
 struct Op {
   std::string code;
   int arg1;
