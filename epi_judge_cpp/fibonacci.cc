@@ -1,7 +1,16 @@
 #include "test_framework/generic_test.h"
 int Fibonacci(int n) {
-  // TODO - you fill in here.
-  return -1;
+  if (n < 2) {
+    return n;
+  }
+  auto prev_1 = 1;
+  auto prev_2 = 0;
+  for (auto i = 2; i <= n; ++i) {
+    auto current = prev_1 + prev_2;
+    prev_2 = prev_1;
+    prev_1 = current;
+  }
+  return prev_1;
 }
 
 int main(int argc, char* argv[]) {
