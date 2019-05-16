@@ -3,7 +3,23 @@
 using std::string;
 
 bool IsPalindrome(const string& s) {
-  // TODO - you fill in here.
+  auto fwdIter = std::cbegin(s);
+  auto bwdIter = std::prev(std::cend(s));
+  while (std::distance(fwdIter, bwdIter) > 0) {
+    while (!std::isalnum(*fwdIter) && std::distance(fwdIter, bwdIter) > 0) {
+      std::advance(fwdIter, 1);
+    }
+
+    while (!std::isalnum(*bwdIter) && std::distance(fwdIter, bwdIter) > 0) {
+      std::advance(bwdIter, -1);
+    }
+
+    if (std::tolower(*fwdIter) != std::tolower(*bwdIter)) {
+      return false;
+    }
+    std::advance(fwdIter, 1);
+    std::advance(bwdIter, -1);
+  }
   return true;
 }
 
