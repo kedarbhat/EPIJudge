@@ -86,7 +86,7 @@ add_executable(is_string_palindromic_punctuation is_string_palindromic_punctuati
 # add_executable(is_string_permutable_to_palindrome is_string_permutable_to_palindrome.cc)
 # add_executable(is_tree_a_bst is_tree_a_bst.cc)
 add_executable(is_tree_balanced is_tree_balanced.cc)
-# add_executable(is_tree_symmetric is_tree_symmetric.cc)
+add_executable(is_tree_symmetric is_tree_symmetric.cc)
 # add_executable(is_valid_parenthesization is_valid_parenthesization.cc)
 # add_executable(is_valid_sudoku is_valid_sudoku.cc)
 # add_executable(k_closest_stars k_closest_stars.cc)
